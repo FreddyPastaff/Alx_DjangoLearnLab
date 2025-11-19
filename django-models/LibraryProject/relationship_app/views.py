@@ -5,6 +5,7 @@ from .models import Library
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import user_passes_test, login_required
 
 """Registration View"""
 def register_view(request):
@@ -24,6 +25,24 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     template_name = 'relationship_app/logout.html'
+
+#Librarian_only_view
+
+def is_librarian(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
+
+@user_passes_test(is_librarian)
+def librarian_view(request):
+    return render(request, 'librarian_view.html')
+
+def is_member(user):
+    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
+
+# Member_only_View
+
+@user_passes_test(is_member)
+def member_view(request):
+    return render(request, 'member_view.html')
 
 # Function-based view to list all books
 def list_books(request):
