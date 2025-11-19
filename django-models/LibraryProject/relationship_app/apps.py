@@ -6,5 +6,4 @@ class RelationshipAppConfig(AppConfig):
     name = 'relationship_app'
 
     def ready(self):
-        # import signals module to register signal handlers
-        from . import signals
+        import relationship_app.signals
