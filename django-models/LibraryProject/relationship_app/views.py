@@ -24,20 +24,24 @@ def register_view(request):
     return render(request, 'relationship_app/register.html', {'form': form})
 
 # Helper functions to check roles
+# These functions assume that each User has a related 'userprofile' model
+# with a 'role' field (e.g., 'Admin', 'Librarian', 'Member').
 def is_admin(user):
-    return hasattr(user, 'userprofile') and user.userprofile.role == 'Admin'
-
+    userprofile = getattr(user, 'userprofile', None)
+    return userprofile is not None and userprofile.role == 'Admin'
 def is_librarian(user):
+    return getattr(user, 'userprofile', None) and user.userprofile.role == 'Librarian'
     return hasattr(user, 'userprofile') and user.userprofile.role == 'Librarian'
 
 def is_member(user):
-    return hasattr(user, 'userprofile') and user.userprofile.role == 'Member'
-
+    userprofile = getattr(user, 'userprofile', None)
+    return userprofile is not None and userprofile.role == 'Member'
 
 # Admin-only view
-@user_passes_test(is_admin)
 @login_required
+@user_passes_test(is_admin)
 def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
     return render(request, 'relationship_app/admin_view.html')
 
 
