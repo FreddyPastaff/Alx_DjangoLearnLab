@@ -149,6 +149,9 @@ SECURE_HSTS_PRELOAD = True
 # Redirect to HTTPS (behind proper proxy/load balancer)
 SECURE_SSL_REDIRECT = True
 
+# Trust the reverse proxy/load balancer headers
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Referrer Policy
 
 SECURE_REFERRER_POLICY = "same-origin"
