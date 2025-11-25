@@ -8,8 +8,14 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import permission_required
-from .forms import BookForm  # Assuming you have a form for Book
+from django import forms  # Assuming you have a form for Book
 
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        
+        fields = ['title', 'author', 'published_date']
 
 """Registration View"""
 def register_view(request):
