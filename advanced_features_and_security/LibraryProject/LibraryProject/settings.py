@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-!fgt+r(scc7v=6us-m@#@@ivjw3xm_!$qtv*$!ynix+*!qa+n2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -49,6 +49,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # CSP middleware
+
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'LibraryProject.urls'
@@ -121,9 +124,45 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
+# Security header & cookies
+# Browser-side protections
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = "DENY"
+
+# HTTPS-only cookies 
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
+# cookie hardening
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = True
+
+#HSTS: enforce HTTPS (only enable when HTTPS is correclty configured)
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Redirect to HTTPS (behind proper proxy/load balancer)
+SECURE_SSL_REDIRECT = True
+
+# Referrer Policy
+
+SECURE_REFERRER_POLICY = "same-origin"
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'Login'
+LOGIN_REDIRECT_URL = '/list_books/'
 LOGOUT_REDIRECT_URL = '/login/'
 
 AuUTH_USER_MODEL = 'bookshelf.CustomUser'  # Custom user model
+
+# Media settings (for profile photos)
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
+
