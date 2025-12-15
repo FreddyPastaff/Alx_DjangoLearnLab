@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'blog.apps.BlogConfig',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,9 @@ LOGOUT_REDIRECT_URL = 'blog:post_list'
 # Media (for profile pictures)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = False  # set True in production with HTTPS
+CSRF_COOKIE_SECURE = False     # set True in production with HTTPS
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
