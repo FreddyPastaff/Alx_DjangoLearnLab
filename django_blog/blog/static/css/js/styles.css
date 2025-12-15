@@ -1,0 +1,17 @@
+/* blog/static/blog/css/style.css */
+body {
+  font-family: system-ui, sans-serif;
+  margin: 2rem;
+}
+form {
+  margin-top: 1rem;
+}
+button {
+  padding: 0.5rem 1rem;
+}
+.messages li {
+  background: #f0f4ff;
+  border: 1px solid #cbd3ff;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+}
