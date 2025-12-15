@@ -1,10 +1,11 @@
+{% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h1>Login</h1>
-<form method="post" novalidate>
+<h2>Login</h2>
+<form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Login</button>
 </form>
-<p>New here? <a href="{% url 'register' %}">Create an account</a></p>
+<p>Don't have an account? <a href="{% url 'blog:register' %}">Register</a></p>
 {% endblock %}
