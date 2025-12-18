@@ -1,20 +1,52 @@
-{% extends "base.html" %}
+{% extends "blog/base.html" %}
+{% block title %}Profile{% endblock %}
 {% block content %}
-<h2>Profile</h2>
+<h1>Profile</h1>
 
-<form method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data" novalidate>
   {% csrf_token %}
+
   <fieldset>
-    <legend>Account</legend>
-    {{ u_form.as_p }}
+    <legend>Account details</legend>
+    {{ user_form.non_field_errors }}
+    <div>
+      <label for="id_first_name">First name</label>
+      {{ user_form.first_name.errors }}
+      {{ user_form.first_name }}
+    </div>
+    <div>
+      <label for="id_last_name">Last name</label>
+      {{ user_form.last_name.errors }}
+      {{ user_form.last_name }}
+    </div>
+    <div>
+      <label for="id_email">Email</label>
+      {{ user_form.email.errors }}
+      {{ user_form.email }}
+    </div>
   </fieldset>
+
+  {% if extended_form %}
   <fieldset>
-    <legend>Profile</legend>
-    {% if request.user.profile.avatar %}
-      <img src="{{ request.user.profile.avatar.url }}" alt="avatar" style="max-width:120px;">
-    {% endif %}
-    {{ p_form.as_p }}
+    <legend>Profile details</legend>
+    {{ extended_form.non_field_errors }}
+    <div>
+      <label for="id_avatar">Avatar</label>
+      {{ extended_form.avatar.errors }}
+      {{ extended_form.avatar }}
+      {% if request.user.profile.avatar %}
+        <img src="{{ request.user.profile.avatar.url }}" alt="Avatar" style="max-width: 120px;">
+      {% endif %}
+    </div>
+    <div>
+      <label for="id_bio">Bio</label>
+      {{ extended_form.bio.errors }}
+      {{ extended_form.bio }}
+    </div>
   </fieldset>
+  {% endif %}
+
   <button type="submit">Save changes</button>
 </form>
 {% endblock %}
+

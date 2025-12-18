@@ -1,29 +1,35 @@
-<!DOCTYPE html>
+<!-- templates/blog/base.html -->
+{% load static %}
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>{% block title %}Django Blog{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'blog/css/style.css' %}">
+  <meta charset="utf-8">
+  <title>{% block title %}Blog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 </head>
 <body>
-  <nav>
-    {% if user.is_authenticated %}
-      <a href="{% url 'profile' %}">Profile</a>
-      <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'register' %}">Register</a>
-    {% endif %}
-  </nav>
+  <header>
+    <nav>
+      {% if user.is_authenticated %}
+        <a href="{% url 'blog:profile' %}">Profile</a>
+        <a href="{% url 'blog:logout' %}">Logout</a>
+      {% else %}
+        <a href="{% url 'blog:login' %}">Login</a>
+        <a href="{% url 'blog:register' %}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
 
   {% if messages %}
     <ul class="messages">
       {% for message in messages %}
-        <li>{{ message }}</li>
+        <li class="{{ message.tags }}">{{ message }}</li>
       {% endfor %}
     </ul>
   {% endif %}
 
-  {% block content %}{% endblock %}
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 </body>
 </html>
